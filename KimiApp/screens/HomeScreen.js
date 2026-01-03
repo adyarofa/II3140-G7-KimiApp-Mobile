@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,75 @@ import {
   Modal,
 } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function HomeScreen({ navigation }) {
   const user = auth.currentUser;
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Dummy notifications data
-  const notifications = [
-    { id: 1, title: 'Modul Baru!', message: 'Modul Elektrokimia sudah tersedia', time: '2 jam lalu', read: false },
-    { id: 2, title: 'Selamat!', message: 'Kamu menyelesaikan Modul Asam & Basa', time: '1 hari lalu', read: false },
-    { id: 3, title: 'Reminder', message: 'Lanjutkan belajar Titrasi', time: '2 hari lalu', read: true },
-  ];
+  // Module names mapping for notifications
+  const moduleNames = {
+    asamBasaProgress: 'Asam & Basa',
+    titrasiProgress: 'Titrasi',
+    reaksiRedoksProgress: 'Reaksi Redoks',
+    ikatanKimiaProgress: 'Ikatan Kimia',
+    termokimiaProgress: 'Termokimia',
+    stoikiometriProgress: 'Stoikiometri',
+  };
+
+  // Fetch notifications from Firebase based on completed modules
+  const fetchNotifications = async () => {
+    if (!user) return;
+    
+    try {
+      setLoading(true);
+      const userProgressRef = doc(db, 'userProgress', user.uid);
+      const docSnap = await getDoc(userProgressRef);
+      
+      const newNotifications = [];
+      
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        let notifId = 1;
+        
+        // Check each module progress and create notification if completed (100%)
+        Object.keys(moduleNames).forEach((key) => {
+          const progress = data[key] || 0;
+          if (progress >= 100) {
+            newNotifications.push({
+              id: notifId++,
+              title: 'Selamat!',
+              message: `Kamu telah menyelesaikan Modul ${moduleNames[key]}`,
+              time: 'Modul selesai',
+              read: true,
+              icon: 'emoji-events',
+              color: '#10B981',
+            });
+          }
+        });
+      }
+      
+      setNotifications(newNotifications);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+      setNotifications([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Auto-refresh notifications when screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      fetchNotifications();
+    }, [user])
+  );
 
   let [fontsLoaded] = useFonts({
     PlusJakartaSans_400Regular,
@@ -96,7 +151,8 @@ export default function HomeScreen({ navigation }) {
       icon: 'science', 
       color: '#FF6B6B',
       duration: '20 min',
-      rating: '4.8'
+      rating: '4.8',
+      screen: 'AsamBasa'
     },
     { 
       id: 2, 
@@ -105,7 +161,8 @@ export default function HomeScreen({ navigation }) {
       icon: 'water-drop', 
       color: '#4ECDC4',
       duration: '35 min',
-      rating: '4.9'
+      rating: '4.9',
+      screen: 'Titrasi'
     },
     { 
       id: 3, 
@@ -114,7 +171,8 @@ export default function HomeScreen({ navigation }) {
       icon: 'flash-on', 
       color: '#9B59B6',
       duration: '25 min',
-      rating: '4.7'
+      rating: '4.7',
+      screen: 'ReaksiRedoks'
     },
   ];
 
@@ -136,7 +194,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.headerSpacer} />
           <TouchableOpacity style={styles.notificationButton} onPress={() => setShowNotifications(true)}>
             <MaterialIcons name="notifications-none" size={26} color="#1E1F35" />
-            <View style={styles.notificationBadge} />
+            {notifications.length > 0 && <View style={styles.notificationBadge} />}
           </TouchableOpacity>
         </View>
 
@@ -156,7 +214,7 @@ export default function HomeScreen({ navigation }) {
 
         {/* CTA Button */}
         <View style={styles.ctaSection}>
-          <TouchableOpacity style={styles.primaryCTA}>
+          <TouchableOpacity style={styles.primaryCTA} onPress={() => navigation.navigate('Teori')}>
             <View style={styles.ctaIcon}>
               <MaterialIcons name="play-arrow" size={28} color="#FFFFFF" />
             </View>
@@ -172,13 +230,13 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Modul Populer</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Teori')}>
               <Text style={styles.seeAllButton}>Lihat Semua</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.modulesContainer}>
             {modules.map((module) => (
-              <TouchableOpacity key={module.id} style={styles.moduleCard}>
+              <TouchableOpacity key={module.id} style={styles.moduleCard} onPress={() => navigation.navigate(module.screen)}>
                 <View style={styles.moduleLeft}>
                   <View style={[styles.moduleIconContainer, { backgroundColor: module.color + '20' }]}>
                     <MaterialIcons name={module.icon} size={28} color={module.color} />
@@ -226,11 +284,12 @@ export default function HomeScreen({ navigation }) {
         animationType="fade"
         onRequestClose={() => setShowNotifications(false)}
       >
-        <TouchableOpacity 
-          style={styles.modalOverlay} 
-          activeOpacity={1} 
-          onPress={() => setShowNotifications(false)}
-        >
+        <View style={styles.modalOverlay}>
+          <TouchableOpacity 
+            style={styles.modalBackdrop} 
+            activeOpacity={1} 
+            onPress={() => setShowNotifications(false)}
+          />
           <View style={styles.notificationModal}>
             <View style={styles.notificationHeader}>
               <Text style={styles.notificationTitle}>Notifikasi</Text>
@@ -238,30 +297,42 @@ export default function HomeScreen({ navigation }) {
                 <MaterialIcons name="close" size={24} color="#1E1F35" />
               </TouchableOpacity>
             </View>
-            <ScrollView style={styles.notificationList}>
-              {notifications.map((notif) => (
-                <TouchableOpacity 
-                  key={notif.id} 
-                  style={[styles.notificationItem, !notif.read && styles.notificationUnread]}
-                >
-                  <View style={[styles.notificationDot, !notif.read && styles.notificationDotActive]} />
-                  <View style={styles.notificationContent}>
-                    <Text style={styles.notificationItemTitle}>{notif.title}</Text>
-                    <Text style={styles.notificationMessage}>{notif.message}</Text>
-                    <Text style={styles.notificationTime}>{notif.time}</Text>
+            <ScrollView 
+              style={styles.notificationList}
+              showsVerticalScrollIndicator={true}
+              nestedScrollEnabled={true}
+            >
+              {notifications.length === 0 ? (
+                <View style={styles.emptyNotification}>
+                  <MaterialIcons name="notifications-off" size={48} color="#9CA3AF" />
+                  <Text style={styles.emptyNotificationText}>Tidak ada notifikasi</Text>
+                  <Text style={styles.emptyNotificationSubtext}>Selesaikan modul untuk mendapat notifikasi!</Text>
+                </View>
+              ) : (
+                notifications.map((notif) => (
+                  <View 
+                    key={notif.id} 
+                    style={styles.notificationItem}
+                  >
+                    <View style={styles.notificationDot} />
+                    <View style={styles.notificationContent}>
+                      <Text style={styles.notificationItemTitle}>{notif.title}</Text>
+                      <Text style={styles.notificationMessage}>{notif.message}</Text>
+                      <Text style={styles.notificationTime}>{notif.time}</Text>
+                    </View>
                   </View>
-                </TouchableOpacity>
-              ))}
+                ))
+              )}
             </ScrollView>
           </View>
-        </TouchableOpacity>
+        </View>
       </Modal>
         <TouchableOpacity style={styles.navItem}>
           <View style={styles.activeIndicator} />
           <MaterialIcons name="home" size={26} color="#6366F1" />
           <Text style={[styles.navLabel, styles.navLabelActive]}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Teori')}>
           <MaterialIcons name="book" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Teori</Text>
         </TouchableOpacity>
@@ -610,6 +681,13 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingHorizontal: 20,
   },
+  modalBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
   notificationModal: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -643,6 +721,25 @@ const styles = StyleSheet.create({
   notificationList: {
     padding: 12,
   },
+  emptyNotification: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+  },
+  emptyNotificationText: {
+    fontSize: 16,
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+    color: '#6B7280',
+    marginTop: 16,
+  },
+  emptyNotificationSubtext: {
+    fontSize: 13,
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: '#9CA3AF',
+    marginTop: 4,
+    textAlign: 'center',
+  },
   notificationItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -657,7 +754,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#6366F1',
     marginTop: 6,
     marginRight: 12,
   },

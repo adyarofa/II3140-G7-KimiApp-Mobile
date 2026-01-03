@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,18 +8,71 @@ import {
   Image,
 } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function ProfileScreen({ navigation }) {
   const user = auth.currentUser;
+  const [teoriProgress, setTeoriProgress] = useState(0);
 
   let [fontsLoaded] = useFonts({
     PlusJakartaSans_400Regular,
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_700Bold,
   });
+
+  // Load progress setiap kali screen difokuskan
+  useFocusEffect(
+    useCallback(() => {
+      loadProgress();
+    }, [])
+  );
+
+  const loadProgress = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = doc(db, 'userProgress', user.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          // Hitung rata-rata progress dari semua modul
+          const asamBasa = data.asamBasaProgress || 0;
+          const titrasi = data.titrasiProgress || 0;
+          const reaksiRedoks = data.reaksiRedoksProgress || 0;
+          const ikatanKimia = data.ikatanKimiaProgress || 0;
+          const termokimia = data.termokimiaProgress || 0;
+          const stoikiometri = data.stoikiometriProgress || 0;
+          
+          const totalProgress = Math.round(
+            (asamBasa + titrasi + reaksiRedoks + ikatanKimia + termokimia + stoikiometri) / 6
+          );
+          setTeoriProgress(totalProgress);
+          return;
+        }
+      }
+      
+      // Fallback to AsyncStorage
+      const asamBasa = parseInt(await AsyncStorage.getItem('asamBasaProgress')) || 0;
+      const titrasi = parseInt(await AsyncStorage.getItem('titrasiProgress')) || 0;
+      const reaksiRedoks = parseInt(await AsyncStorage.getItem('reaksiRedoksProgress')) || 0;
+      const ikatanKimia = parseInt(await AsyncStorage.getItem('ikatanKimiaProgress')) || 0;
+      const termokimia = parseInt(await AsyncStorage.getItem('termokimiaProgress')) || 0;
+      const stoikiometri = parseInt(await AsyncStorage.getItem('stoikiometriProgress')) || 0;
+      
+      const totalProgress = Math.round(
+        (asamBasa + titrasi + reaksiRedoks + ikatanKimia + termokimia + stoikiometri) / 6
+      );
+      setTeoriProgress(totalProgress);
+    } catch (error) {
+      console.error('Error loading progress:', error);
+    }
+  };
 
   // Random profile picture selection (same as HomeScreen)
   const profilePics = [
@@ -35,9 +88,7 @@ export default function ProfileScreen({ navigation }) {
     return profilePics[index];
   }, [user?.email]);
 
-  // Dummy progress data (nanti bisa diganti dengan Firebase)
-  const teoriProgress = 100; // percentage
-  const kuisHighScore = 16; // points
+  const kuisHighScore = 16; // points (dummy, bisa diganti nanti)
 
   if (!fontsLoaded) {
     return null;
@@ -87,7 +138,7 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.progressText}>{teoriProgress}% Selesai</Text>
               </View>
               <Text style={styles.statsDescription}>Progress Anda dalam membaca modul teori.</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Teori')}>
                 <Text style={styles.actionLink}>Lanjutkan Belajar</Text>
               </TouchableOpacity>
             </View>
@@ -121,7 +172,7 @@ export default function ProfileScreen({ navigation }) {
           <MaterialIcons name="home" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Teori')}>
           <MaterialIcons name="book" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Teori</Text>
         </TouchableOpacity>
@@ -171,7 +222,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#E1E5FD',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
@@ -265,7 +315,7 @@ const styles = StyleSheet.create({
     color: '#6366F1',
   },
   logoutButton: {
-    backgroundColor: '#B45454',
+    backgroundColor: '#cb3636ff',
     borderRadius: 30,
     paddingVertical: 14,
     paddingHorizontal: 40,
