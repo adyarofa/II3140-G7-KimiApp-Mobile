@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  Modal,
 } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -15,6 +16,14 @@ import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, Plus
 
 export default function HomeScreen({ navigation }) {
   const user = auth.currentUser;
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  // Dummy notifications data
+  const notifications = [
+    { id: 1, title: 'Modul Baru!', message: 'Modul Elektrokimia sudah tersedia', time: '2 jam lalu', read: false },
+    { id: 2, title: 'Selamat!', message: 'Kamu menyelesaikan Modul Asam & Basa', time: '1 hari lalu', read: false },
+    { id: 3, title: 'Reminder', message: 'Lanjutkan belajar Titrasi', time: '2 hari lalu', read: true },
+  ];
 
   let [fontsLoaded] = useFonts({
     PlusJakartaSans_400Regular,
@@ -125,7 +134,7 @@ export default function HomeScreen({ navigation }) {
             resizeMode="contain"
           />
           <View style={styles.headerSpacer} />
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity style={styles.notificationButton} onPress={() => setShowNotifications(true)}>
             <MaterialIcons name="notifications-none" size={26} color="#1E1F35" />
             <View style={styles.notificationBadge} />
           </TouchableOpacity>
@@ -209,6 +218,44 @@ export default function HomeScreen({ navigation }) {
 
       {/* Bottom Navigation - Fixed at bottom */}
       <View style={styles.bottomNav}>
+
+      {/* Notification Modal */}
+      <Modal
+        visible={showNotifications}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowNotifications(false)}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay} 
+          activeOpacity={1} 
+          onPress={() => setShowNotifications(false)}
+        >
+          <View style={styles.notificationModal}>
+            <View style={styles.notificationHeader}>
+              <Text style={styles.notificationTitle}>Notifikasi</Text>
+              <TouchableOpacity style={styles.notificationCloseButton} onPress={() => setShowNotifications(false)}>
+                <MaterialIcons name="close" size={24} color="#1E1F35" />
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.notificationList}>
+              {notifications.map((notif) => (
+                <TouchableOpacity 
+                  key={notif.id} 
+                  style={[styles.notificationItem, !notif.read && styles.notificationUnread]}
+                >
+                  <View style={[styles.notificationDot, !notif.read && styles.notificationDotActive]} />
+                  <View style={styles.notificationContent}>
+                    <Text style={styles.notificationItemTitle}>{notif.title}</Text>
+                    <Text style={styles.notificationMessage}>{notif.message}</Text>
+                    <Text style={styles.notificationTime}>{notif.time}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </TouchableOpacity>
+      </Modal>
         <TouchableOpacity style={styles.navItem}>
           <View style={styles.activeIndicator} />
           <MaterialIcons name="home" size={26} color="#6366F1" />
@@ -226,7 +273,7 @@ export default function HomeScreen({ navigation }) {
           <MaterialIcons name="quiz" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Kuis</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
           <MaterialIcons name="person" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Profil</Text>
         </TouchableOpacity>
@@ -555,5 +602,87 @@ const styles = StyleSheet.create({
   },
   navLabelActive: {
     color: '#6366F1',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-start',
+    paddingTop: 100,
+    paddingHorizontal: 20,
+  },
+  notificationModal: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    maxHeight: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  notificationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    position: 'relative',
+  },
+  notificationTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    fontFamily: 'PlusJakartaSans_700Bold',
+    color: '#1E1F35',
+    textAlign: 'center',
+  },
+  notificationCloseButton: {
+    position: 'absolute',
+    right: 20,
+  },
+  notificationList: {
+    padding: 12,
+  },
+  notificationItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    padding: 12,
+    borderRadius: 12,
+    marginBottom: 8,
+  },
+  notificationUnread: {
+    backgroundColor: '#EEF2FF',
+  },
+  notificationDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#E5E7EB',
+    marginTop: 6,
+    marginRight: 12,
+  },
+  notificationDotActive: {
+    backgroundColor: '#6366F1',
+  },
+  notificationContent: {
+    flex: 1,
+  },
+  notificationItemTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+    color: '#1E1F35',
+    marginBottom: 4,
+  },
+  notificationMessage: {
+    fontSize: 13,
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  notificationTime: {
+    fontSize: 11,
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: '#9CA3AF',
   },
 });
