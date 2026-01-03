@@ -33,7 +33,7 @@ const slides = [
   },
   {
     id: 3,
-    title: 'Belajar\nJadi Mudah',
+    title: 'Belajar\njadi Mudah',
     subtitle: 'Materi lengkap dengan\npenjelasan yang mudah\ndipahami oleh kalangan\nmanapun.',
     image: require('../assets/landingpage3.png'),
     icon: 'menu-book',
@@ -82,6 +82,14 @@ export default function LandingScreen({ navigation }) {
     navigation.navigate('Login');
   };
 
+  const goToSlide = (index) => {
+    flatListRef.current?.scrollToOffset({
+      offset: index * width,
+      animated: true,
+    });
+    setCurrentIndex(index);
+  };
+
   const renderSlide = ({ item }) => (
     <View style={styles.slide}>
       {/* Outer gradient for glass effect */}
@@ -104,8 +112,9 @@ export default function LandingScreen({ navigation }) {
             {/* Dots inside card */}
             <View style={styles.dotsContainer}>
               {slides.map((_, index) => (
-                <View
+                <TouchableOpacity
                   key={index}
+                  onPress={() => goToSlide(index)}
                   style={[
                     styles.dot,
                     currentIndex === index && styles.dotActive,
