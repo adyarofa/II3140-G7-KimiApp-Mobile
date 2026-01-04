@@ -161,7 +161,6 @@ export default function HomeScreen({ navigation }) {
       icon: 'science', 
       color: '#FF6B6B',
       duration: '20 min',
-      rating: '4.8',
       screen: 'AsamBasa'
     },
     { 
@@ -171,7 +170,6 @@ export default function HomeScreen({ navigation }) {
       icon: 'water-drop', 
       color: '#4ECDC4',
       duration: '35 min',
-      rating: '4.9',
       screen: 'Titrasi'
     },
     { 
@@ -181,7 +179,6 @@ export default function HomeScreen({ navigation }) {
       icon: 'flash-on', 
       color: '#9B59B6',
       duration: '25 min',
-      rating: '4.7',
       screen: 'ReaksiRedoks'
     },
   ];
@@ -257,8 +254,6 @@ export default function HomeScreen({ navigation }) {
                     <View style={styles.moduleStats}>
                       <MaterialIcons name="access-time" size={14} color="#9CA3AF" />
                       <Text style={styles.moduleStatText}>{module.duration}</Text>
-                      <MaterialIcons name="star" size={14} color="#FBBF24" style={styles.starIcon} />
-                      <Text style={styles.moduleStatText}>{module.rating}</Text>
                     </View>
                   </View>
                 </View>

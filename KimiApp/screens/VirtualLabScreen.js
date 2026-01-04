@@ -264,7 +264,8 @@ export default function VirtualLabScreen({ navigation }) {
               end={{ x: 1, y: 1 }}
             >
               <MaterialIcons name="biotech" size={40} color="#fff" />
-              <Text style={styles.titleText}>Simulasi Indikator Asam-Basa</Text>
+              <Text style={[styles.titleText, styles.titleTextFirst]}>Simulasi Indikator</Text>
+              <Text style={styles.titleText}>Asam-Basa</Text>
               <Text style={styles.subtitleText}>Pilih larutan dan indikator untuk melihat perubahan warna</Text>
             </LinearGradient>
           </View>
@@ -565,8 +566,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: 'PlusJakartaSans_700Bold',
     color: '#fff',
-    marginTop: 12,
     textAlign: 'center',
+    lineHeight: 28,
+  },
+  titleTextFirst: {
+    marginTop: 12,
   },
   subtitleText: {
     fontSize: 14,
