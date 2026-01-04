@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: -60,
   },
   logoGlow: {
     position: 'absolute',
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: 'center',
-    marginTop: -50,
+    marginTop: -60,
   },
   appName: {
     fontSize: 40,
