@@ -26,13 +26,13 @@ yarn-error.*
 
 # macOS
 .DS_Store
-
-# Firebase config (contains API keys)
-config/firebase.js
 *.pem
 
 # local env files
 .env*.local
+
+# config (Firebase, API keys, etc.)
+config/
 
 # typescript
 *.tsbuildinfo

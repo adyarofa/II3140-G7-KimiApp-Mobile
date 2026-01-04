@@ -42,18 +42,20 @@ export default function TitrasiScreen({ navigation }) {
             return;
           }
         }
+        // User exists but no progress data yet - start from 0
+        setProgress(0);
+        await AsyncStorage.setItem('titrasiProgress', '0');
+        return;
       }
       
+      // No user logged in - fallback to AsyncStorage
       const savedProgress = await AsyncStorage.getItem('titrasiProgress');
       if (savedProgress !== null) {
         setProgress(parseInt(savedProgress));
       }
     } catch (error) {
       console.error('Error loading progress:', error);
-      const savedProgress = await AsyncStorage.getItem('titrasiProgress');
-      if (savedProgress !== null) {
-        setProgress(parseInt(savedProgress));
-      }
+      setProgress(0);
     }
   };
 

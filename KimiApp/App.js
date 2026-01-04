@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
@@ -16,6 +16,8 @@ import ReaksiRedoksScreen from './screens/ReaksiRedoksScreen';
 import IkatanKimiaScreen from './screens/IkatanKimiaScreen';
 import TermokimiaScreen from './screens/TermokimiaScreen';
 import StoikiometriScreen from './screens/StoikiometriScreen';
+import QuizScreen from './screens/QuizScreen';
+import VirtualLabScreen from './screens/VirtualLabScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +59,8 @@ export default function App() {
           <Stack.Screen name="IkatanKimia" component={IkatanKimiaScreen} />
           <Stack.Screen name="Termokimia" component={TermokimiaScreen} />
           <Stack.Screen name="Stoikiometri" component={StoikiometriScreen} />
+          <Stack.Screen name="Quiz" component={QuizScreen} />
+          <Stack.Screen name="VirtualLab" component={VirtualLabScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />

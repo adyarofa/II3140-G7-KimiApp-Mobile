@@ -17,7 +17,9 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default function ProfileScreen({ navigation }) {
   const user = auth.currentUser;
+  const [loading, setLoading] = useState(true);
   const [teoriProgress, setTeoriProgress] = useState(0);
+  const [kuisHighScore, setKuisHighScore] = useState(0);
 
   let [fontsLoaded] = useFonts({
     PlusJakartaSans_400Regular,
@@ -25,12 +27,17 @@ export default function ProfileScreen({ navigation }) {
     PlusJakartaSans_700Bold,
   });
 
-  // Load progress setiap kali screen difokuskan
   useFocusEffect(
     useCallback(() => {
-      loadProgress();
+      loadAllData();
     }, [])
   );
+
+  const loadAllData = async () => {
+    setLoading(true);
+    await Promise.all([loadProgress(), fetchMaxScore()]);
+    setLoading(false);
+  };
 
   const loadProgress = async () => {
     try {
@@ -41,7 +48,6 @@ export default function ProfileScreen({ navigation }) {
         
         if (docSnap.exists()) {
           const data = docSnap.data();
-          // Hitung rata-rata progress dari semua modul
           const asamBasa = data.asamBasaProgress || 0;
           const titrasi = data.titrasiProgress || 0;
           const reaksiRedoks = data.reaksiRedoksProgress || 0;
@@ -53,28 +59,39 @@ export default function ProfileScreen({ navigation }) {
             (asamBasa + titrasi + reaksiRedoks + ikatanKimia + termokimia + stoikiometri) / 6
           );
           setTeoriProgress(totalProgress);
-          return;
+        } else {
+          // User baru - mulai dari 0
+          setTeoriProgress(0);
         }
+        return;
       }
       
-      // Fallback to AsyncStorage
-      const asamBasa = parseInt(await AsyncStorage.getItem('asamBasaProgress')) || 0;
-      const titrasi = parseInt(await AsyncStorage.getItem('titrasiProgress')) || 0;
-      const reaksiRedoks = parseInt(await AsyncStorage.getItem('reaksiRedoksProgress')) || 0;
-      const ikatanKimia = parseInt(await AsyncStorage.getItem('ikatanKimiaProgress')) || 0;
-      const termokimia = parseInt(await AsyncStorage.getItem('termokimiaProgress')) || 0;
-      const stoikiometri = parseInt(await AsyncStorage.getItem('stoikiometriProgress')) || 0;
-      
-      const totalProgress = Math.round(
-        (asamBasa + titrasi + reaksiRedoks + ikatanKimia + termokimia + stoikiometri) / 6
-      );
-      setTeoriProgress(totalProgress);
+      // No user - set to 0
+      setTeoriProgress(0);
     } catch (error) {
       console.error('Error loading progress:', error);
+      setTeoriProgress(0);
+    }
+  };
+  const fetchMaxScore = async () => {
+    if (!user) return;
+
+    try {
+      const userProgressRef = doc(db, "userProgress", user.uid);
+      const docSnap = await getDoc(userProgressRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setKuisHighScore(data.maxQuizScore || 0);
+      } else {
+        setKuisHighScore(0);
+      }
+    } catch (error) {
+      console.error("Error fetching max score:", error);
+      setKuisHighScore(0);
     }
   };
 
-  // Random profile picture selection (same as HomeScreen)
   const profilePics = [
     require('../assets/tosca.png'),
     require('../assets/kuning.png'),
@@ -88,14 +105,22 @@ export default function ProfileScreen({ navigation }) {
     return profilePics[index];
   }, [user?.email]);
 
-  const kuisHighScore = 16; // points (dummy, bisa diganti nanti)
-
   if (!fontsLoaded) {
     return null;
   }
 
   const handleLogout = async () => {
     try {
+      // Clear all progress from AsyncStorage saat logout
+      await AsyncStorage.multiRemove([
+        'asamBasaProgress',
+        'titrasiProgress',
+        'reaksiRedoksProgress',
+        'ikatanKimiaProgress',
+        'termokimiaProgress',
+        'stoikiometriProgress',
+      ]);
+      
       await signOut(auth);
       navigation.reset({
         index: 0,
@@ -153,7 +178,7 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.scoreLabel}>Poin</Text>
               </View>
               <Text style={styles.statsDescription}>Skor tertinggi yang pernah Anda capai di kuis.</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Quiz')}>
                 <Text style={styles.actionLink}>Coba Lagi</Text>
               </TouchableOpacity>
             </View>
@@ -176,11 +201,11 @@ export default function ProfileScreen({ navigation }) {
           <MaterialIcons name="book" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Teori</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('VirtualLab')}>
           <MaterialIcons name="science" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Simulasi</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Quiz')}>
           <MaterialIcons name="quiz" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Kuis</Text>
         </TouchableOpacity>

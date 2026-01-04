@@ -33,11 +33,18 @@ export default function StoikiometriScreen({ navigation }) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists() && docSnap.data().stoikiometriProgress) {
           setScrollProgress(docSnap.data().stoikiometriProgress);
+          return;
         }
+        // User exists but no progress data yet - start from 0
+        setScrollProgress(0);
+        return;
       }
-    } catch (error) {
+      // No user logged in - fallback to AsyncStorage
       const saved = await AsyncStorage.getItem('stoikiometriProgress');
       if (saved) setScrollProgress(parseInt(saved));
+    } catch (error) {
+      console.error('Error loading progress:', error);
+      setScrollProgress(0);
     }
   };
 

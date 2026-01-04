@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth, db } from '../config/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
 import { useFocusEffect } from '@react-navigation/native';
@@ -47,7 +47,7 @@ export default function HomeScreen({ navigation }) {
         const data = docSnap.data();
         let notifId = 1;
         
-        // Check each module progress and create notification if completed (100%)
+        // Notifikasi untuk modul yang selesai
         Object.keys(moduleNames).forEach((key) => {
           const progress = data[key] || 0;
           if (progress >= 100) {
@@ -62,6 +62,21 @@ export default function HomeScreen({ navigation }) {
             });
           }
         });
+        const maxQuizScore = data.maxQuizScore || 0;
+        const hasNewHighScore = data.hasNewHighScore || false;
+        if (maxQuizScore > 0 && hasNewHighScore) {
+          newNotifications.push({
+            id: notifId++,
+            title: 'Skor Tertinggi Baru!',
+            message: `Selamat! Skor tertinggi baru: ${maxQuizScore} poin`,
+            time: data.lastQuizDate ? new Date(data.lastQuizDate).toLocaleDateString('id-ID') : 'Kuis selesai',
+            read: false,
+            icon: 'emoji-events',
+            color: '#F59E0B',
+          });
+          const userProgressRef = doc(db, 'userProgress', user.uid);
+          await updateDoc(userProgressRef, { hasNewHighScore: false });
+        }
       }
       
       setNotifications(newNotifications);
@@ -336,11 +351,11 @@ export default function HomeScreen({ navigation }) {
           <MaterialIcons name="book" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Teori</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('VirtualLab')}>
           <MaterialIcons name="science" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Simulasi</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Quiz')}>
           <MaterialIcons name="quiz" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Kuis</Text>
         </TouchableOpacity>

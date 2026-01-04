@@ -38,7 +38,6 @@ export default function TeoriScreen({ navigation }) {
 
   const loadProgress = async () => {
     try {
-      // Try to load from Firebase first
       const user = auth.currentUser;
       if (user) {
         const docRef = doc(db, 'userProgress', user.uid);
@@ -46,86 +45,40 @@ export default function TeoriScreen({ navigation }) {
         
         if (docSnap.exists()) {
           const data = docSnap.data();
-          if (data.asamBasaProgress !== undefined) {
-            setAsamBasaProgress(data.asamBasaProgress);
-            await AsyncStorage.setItem('asamBasaProgress', data.asamBasaProgress.toString());
-          }
-          if (data.titrasiProgress !== undefined) {
-            setTitrasiProgress(data.titrasiProgress);
-            await AsyncStorage.setItem('titrasiProgress', data.titrasiProgress.toString());
-          }
-          if (data.reaksiRedoksProgress !== undefined) {
-            setReaksiRedoksProgress(data.reaksiRedoksProgress);
-            await AsyncStorage.setItem('reaksiRedoksProgress', data.reaksiRedoksProgress.toString());
-          }
-          if (data.ikatanKimiaProgress !== undefined) {
-            setIkatanKimiaProgress(data.ikatanKimiaProgress);
-            await AsyncStorage.setItem('ikatanKimiaProgress', data.ikatanKimiaProgress.toString());
-          }
-          if (data.termokimiaProgress !== undefined) {
-            setTermokimiaProgress(data.termokimiaProgress);
-            await AsyncStorage.setItem('termokimiaProgress', data.termokimiaProgress.toString());
-          }
-          if (data.stoikiometriProgress !== undefined) {
-            setStoikiometriProgress(data.stoikiometriProgress);
-            await AsyncStorage.setItem('stoikiometriProgress', data.stoikiometriProgress.toString());
-          }
-          return;
+          setAsamBasaProgress(data.asamBasaProgress || 0);
+          setTitrasiProgress(data.titrasiProgress || 0);
+          setReaksiRedoksProgress(data.reaksiRedoksProgress || 0);
+          setIkatanKimiaProgress(data.ikatanKimiaProgress || 0);
+          setTermokimiaProgress(data.termokimiaProgress || 0);
+          setStoikiometriProgress(data.stoikiometriProgress || 0);
+        } else {
+          // User baru - mulai dari 0 semua
+          setAsamBasaProgress(0);
+          setTitrasiProgress(0);
+          setReaksiRedoksProgress(0);
+          setIkatanKimiaProgress(0);
+          setTermokimiaProgress(0);
+          setStoikiometriProgress(0);
         }
+        return;
       }
       
-      // Fallback to AsyncStorage
-      const savedAsamBasa = await AsyncStorage.getItem('asamBasaProgress');
-      if (savedAsamBasa !== null) {
-        setAsamBasaProgress(parseInt(savedAsamBasa));
-      }
-      const savedTitrasi = await AsyncStorage.getItem('titrasiProgress');
-      if (savedTitrasi !== null) {
-        setTitrasiProgress(parseInt(savedTitrasi));
-      }
-      const savedReaksiRedoks = await AsyncStorage.getItem('reaksiRedoksProgress');
-      if (savedReaksiRedoks !== null) {
-        setReaksiRedoksProgress(parseInt(savedReaksiRedoks));
-      }
-      const savedIkatanKimia = await AsyncStorage.getItem('ikatanKimiaProgress');
-      if (savedIkatanKimia !== null) {
-        setIkatanKimiaProgress(parseInt(savedIkatanKimia));
-      }
-      const savedTermokimia = await AsyncStorage.getItem('termokimiaProgress');
-      if (savedTermokimia !== null) {
-        setTermokimiaProgress(parseInt(savedTermokimia));
-      }
-      const savedStoikiometri = await AsyncStorage.getItem('stoikiometriProgress');
-      if (savedStoikiometri !== null) {
-        setStoikiometriProgress(parseInt(savedStoikiometri));
-      }
+      // No user logged in - reset to 0
+      setAsamBasaProgress(0);
+      setTitrasiProgress(0);
+      setReaksiRedoksProgress(0);
+      setIkatanKimiaProgress(0);
+      setTermokimiaProgress(0);
+      setStoikiometriProgress(0);
     } catch (error) {
       console.error('Error loading progress:', error);
-      // Fallback to AsyncStorage on error
-      const savedAsamBasa = await AsyncStorage.getItem('asamBasaProgress');
-      if (savedAsamBasa !== null) {
-        setAsamBasaProgress(parseInt(savedAsamBasa));
-      }
-      const savedTitrasi = await AsyncStorage.getItem('titrasiProgress');
-      if (savedTitrasi !== null) {
-        setTitrasiProgress(parseInt(savedTitrasi));
-      }
-      const savedReaksiRedoks = await AsyncStorage.getItem('reaksiRedoksProgress');
-      if (savedReaksiRedoks !== null) {
-        setReaksiRedoksProgress(parseInt(savedReaksiRedoks));
-      }
-      const savedIkatanKimia = await AsyncStorage.getItem('ikatanKimiaProgress');
-      if (savedIkatanKimia !== null) {
-        setIkatanKimiaProgress(parseInt(savedIkatanKimia));
-      }
-      const savedTermokimia = await AsyncStorage.getItem('termokimiaProgress');
-      if (savedTermokimia !== null) {
-        setTermokimiaProgress(parseInt(savedTermokimia));
-      }
-      const savedStoikiometri = await AsyncStorage.getItem('stoikiometriProgress');
-      if (savedStoikiometri !== null) {
-        setStoikiometriProgress(parseInt(savedStoikiometri));
-      }
+      // On error - reset to 0
+      setAsamBasaProgress(0);
+      setTitrasiProgress(0);
+      setReaksiRedoksProgress(0);
+      setIkatanKimiaProgress(0);
+      setTermokimiaProgress(0);
+      setStoikiometriProgress(0);
     }
   };
 
@@ -309,11 +262,11 @@ export default function TeoriScreen({ navigation }) {
           <MaterialIcons name="book" size={26} color="#6366F1" />
           <Text style={[styles.navLabel, styles.navLabelActive]}>Teori</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('VirtualLab')}>
           <MaterialIcons name="science" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Simulasi</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Quiz')}>
           <MaterialIcons name="quiz" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Kuis</Text>
         </TouchableOpacity>

@@ -29,35 +29,33 @@ export default function AsamBasaScreen({ navigation }) {
 
   const loadProgress = async () => {
     try {
-      // Try to load from Firebase first
       const user = auth.currentUser;
       if (user) {
         const docRef = doc(db, 'userProgress', user.uid);
         const docSnap = await getDoc(docRef);
         
-        if (docSnap.exists()) {
+        if (docSnap.exists() && docSnap.data().asamBasaProgress) {
           const data = docSnap.data();
           if (data.asamBasaProgress !== undefined) {
             setProgress(data.asamBasaProgress);
-            // Cache locally
             await AsyncStorage.setItem('asamBasaProgress', data.asamBasaProgress.toString());
             return;
           }
         }
+        // User exists but no progress data yet - start from 0
+        setProgress(0);
+        await AsyncStorage.setItem('asamBasaProgress', '0');
+        return;
       }
       
-      // Fallback to AsyncStorage
+      // No user logged in - fallback to AsyncStorage
       const savedProgress = await AsyncStorage.getItem('asamBasaProgress');
       if (savedProgress !== null) {
         setProgress(parseInt(savedProgress));
       }
     } catch (error) {
       console.error('Error loading progress:', error);
-      // Fallback to AsyncStorage on error
-      const savedProgress = await AsyncStorage.getItem('asamBasaProgress');
-      if (savedProgress !== null) {
-        setProgress(parseInt(savedProgress));
-      }
+      setProgress(0);
     }
   };
 
