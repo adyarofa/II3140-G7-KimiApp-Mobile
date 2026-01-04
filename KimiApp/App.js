@@ -22,6 +22,22 @@ import VirtualLabScreen from './screens/VirtualLabScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  let [fontsLoaded] = useFonts({
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_600SemiBold,
+    PlusJakartaSans_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
+
   return (
     <>
       <NavigationContainer>
