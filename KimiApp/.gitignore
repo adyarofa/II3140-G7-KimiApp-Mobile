@@ -32,9 +32,6 @@ yarn-error.*
 .env
 .env*.local
 
-# config (Firebase, API keys, etc.)
-config/
-
 # typescript
 *.tsbuildinfo
 
