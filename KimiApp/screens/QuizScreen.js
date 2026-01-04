@@ -51,7 +51,7 @@ const BottomNavBar = ({ navigation, activeTab = "Kuis" }) => {
         <MaterialIcons name="book" size={26} color="#9CA3AF" />
         <Text style={styles.navLabel}>Teori</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate("Simulasi")}> 
+      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate("VirtualLab")}> 
         <MaterialIcons name="science" size={26} color="#9CA3AF" />
         <Text style={styles.navLabel}>Simulasi</Text>
       </TouchableOpacity>

@@ -17,6 +17,7 @@ import IkatanKimiaScreen from './screens/IkatanKimiaScreen';
 import TermokimiaScreen from './screens/TermokimiaScreen';
 import StoikiometriScreen from './screens/StoikiometriScreen';
 import QuizScreen from './screens/QuizScreen';
+import VirtualLabScreen from './screens/VirtualLabScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ export default function App() {
           <Stack.Screen name="Termokimia" component={TermokimiaScreen} />
           <Stack.Screen name="Stoikiometri" component={StoikiometriScreen} />
           <Stack.Screen name="Quiz" component={QuizScreen} />
+          <Stack.Screen name="VirtualLab" component={VirtualLabScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />

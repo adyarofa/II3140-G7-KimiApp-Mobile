@@ -262,7 +262,7 @@ export default function TeoriScreen({ navigation }) {
           <MaterialIcons name="book" size={26} color="#6366F1" />
           <Text style={[styles.navLabel, styles.navLabelActive]}>Teori</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('VirtualLab')}>
           <MaterialIcons name="science" size={26} color="#9CA3AF" />
           <Text style={styles.navLabel}>Simulasi</Text>
         </TouchableOpacity>
