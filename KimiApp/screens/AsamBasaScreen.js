@@ -22,7 +22,6 @@ export default function AsamBasaScreen({ navigation }) {
     PlusJakartaSans_700Bold,
   });
 
-  // Load saved progress on mount
   useEffect(() => {
     loadProgress();
   }, []);
@@ -42,13 +41,11 @@ export default function AsamBasaScreen({ navigation }) {
             return;
           }
         }
-        // User exists but no progress data yet - start from 0
         setProgress(0);
         await AsyncStorage.setItem('asamBasaProgress', '0');
         return;
       }
       
-      // No user logged in - fallback to AsyncStorage
       const savedProgress = await AsyncStorage.getItem('asamBasaProgress');
       if (savedProgress !== null) {
         setProgress(parseInt(savedProgress));
@@ -61,14 +58,11 @@ export default function AsamBasaScreen({ navigation }) {
 
   const saveProgress = async (newProgress) => {
     try {
-      // Only save if new progress is higher than current progress
       if (newProgress > progress) {
         setProgress(newProgress);
         
-        // Save to AsyncStorage (local cache)
         await AsyncStorage.setItem('asamBasaProgress', newProgress.toString());
         
-        // Save to Firebase
         const user = auth.currentUser;
         if (user) {
           const docRef = doc(db, 'userProgress', user.uid);
@@ -89,7 +83,6 @@ export default function AsamBasaScreen({ navigation }) {
     const scrollPercentage = Math.round(
       ((contentOffset.y + layoutMeasurement.height) / contentSize.height) * 100
     );
-    // Cap at 100%
     const cappedProgress = Math.min(scrollPercentage, 100);
     saveProgress(cappedProgress);
   };
@@ -814,7 +807,6 @@ const styles = StyleSheet.create({
   navLabelActive: {
     color: '#6366F1',
   },
-  // Teori Card Styles
   theoryCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -866,7 +858,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1E1F35',
   },
-  // pH Scale Card Styles
   phScaleCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -958,7 +949,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_400Regular',
     color: '#6B7280',
   },
-  // Indicator Card Styles
   indicatorCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -1032,7 +1022,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
   },
-  // Formula Card Styles
   formulaCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -1091,7 +1080,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     fontStyle: 'italic',
   },
-  // Example Card Styles
   exampleCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -1152,7 +1140,6 @@ const styles = StyleSheet.create({
     color: '#065F46',
     lineHeight: 22,
   },
-  // Navigation Buttons
   navigationButtons: {
     flexDirection: 'row',
     gap: 12,

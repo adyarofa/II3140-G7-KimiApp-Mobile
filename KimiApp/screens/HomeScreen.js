@@ -22,7 +22,6 @@ export default function HomeScreen({ navigation }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Module names mapping for notifications
   const moduleNames = {
     asamBasaProgress: 'Asam & Basa',
     titrasiProgress: 'Titrasi',
@@ -32,7 +31,6 @@ export default function HomeScreen({ navigation }) {
     stoikiometriProgress: 'Stoikiometri',
   };
 
-  // Fetch notifications from Firebase based on completed modules
   const fetchNotifications = async () => {
     if (!user) return;
     
@@ -47,7 +45,6 @@ export default function HomeScreen({ navigation }) {
         const data = docSnap.data();
         let notifId = 1;
         
-        // Notifikasi untuk modul yang selesai
         Object.keys(moduleNames).forEach((key) => {
           const progress = data[key] || 0;
           if (progress >= 100) {
@@ -88,7 +85,6 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  // Auto-refresh notifications when screen is focused
   useFocusEffect(
     useCallback(() => {
       fetchNotifications();
@@ -101,7 +97,6 @@ export default function HomeScreen({ navigation }) {
     PlusJakartaSans_700Bold,
   });
 
-  // Random profile picture selection
   const profilePics = [
     require('../assets/tosca.png'),
     require('../assets/kuning.png'),
@@ -111,7 +106,7 @@ export default function HomeScreen({ navigation }) {
   
   const randomProfilePic = React.useMemo(() => {
     const userEmail = user?.email || '';
-    const index = userEmail.length % 4; // Consistent random based on user email
+    const index = userEmail.length % 4; 
     return profilePics[index];
   }, [user?.email]);
 

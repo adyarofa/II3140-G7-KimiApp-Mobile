@@ -35,11 +35,9 @@ export default function StoikiometriScreen({ navigation }) {
           setScrollProgress(docSnap.data().stoikiometriProgress);
           return;
         }
-        // User exists but no progress data yet - start from 0
         setScrollProgress(0);
         return;
       }
-      // No user logged in - fallback to AsyncStorage
       const saved = await AsyncStorage.getItem('stoikiometriProgress');
       if (saved) setScrollProgress(parseInt(saved));
     } catch (error) {

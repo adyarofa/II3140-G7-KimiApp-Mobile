@@ -11,12 +11,12 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { auth, db } from "../config/firebase";
+import { useFonts, PlusJakartaSans_400Regular, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
 import { doc, getDoc, updateDoc, setDoc, collection, getDocs } from "firebase/firestore";
 
 const TOTAL_QUESTIONS = 8;
 const POINTS_PER_QUESTION = 4;
 
-// Function untuk ambil random questions dari Firestore
 const getRandomQuestions = async (count = 8) => {
   try {
     const querySnapshot = await getDocs(collection(db, "quizQuestions"));
@@ -27,7 +27,6 @@ const getRandomQuestions = async (count = 8) => {
         firebaseQuestions.push(doc.data());
       });
       
-      // Shuffle dan ambil sejumlah count
       const shuffled = [...firebaseQuestions].sort(() => Math.random() - 0.5);
       return shuffled.slice(0, count);
     } else {
@@ -39,7 +38,6 @@ const getRandomQuestions = async (count = 8) => {
   }
 };
 
-// Bottom Navigation Component
 const BottomNavBar = ({ navigation, activeTab = "Kuis" }) => {
   return (
     <View style={styles.bottomNav}>
@@ -69,6 +67,12 @@ const BottomNavBar = ({ navigation, activeTab = "Kuis" }) => {
 };
 
 const QuizScreen = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_600SemiBold,
+    PlusJakartaSans_700Bold,
+  });
+
   const user = auth.currentUser;
   const [gameState, setGameState] = useState("start");
   const [questions, setQuestions] = useState([]);
@@ -162,7 +166,7 @@ const QuizScreen = ({ navigation }) => {
   };
 
   const handleAnswerSelect = (answerIndex) => {
-    if (selectedAnswer !== null) return; // Sudah memilih
+    if (selectedAnswer !== null) return;
 
     setSelectedAnswer(answerIndex);
     setShowExplanation(true);
@@ -217,7 +221,6 @@ const QuizScreen = ({ navigation }) => {
     return [styles.answerButton, styles.disabledAnswer];
   };
 
-  // START SCREEN
   if (gameState === "start") {
     return (
       <View style={styles.container}>
@@ -294,7 +297,6 @@ const QuizScreen = ({ navigation }) => {
     );
   }
 
-  // PLAYING SCREEN
   if (gameState === "playing" && questions.length > 0) {
     const currentQuestion = questions[currentQuestionIndex];
     const progress = ((currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100;
@@ -518,6 +520,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
     paddingBottom: 120,
+    justifyContent: "center",
   },
   card: {
     backgroundColor: "#FFFFFF",
@@ -545,12 +548,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#1E1F35",
     textAlign: "center",
   },
   subtitle: {
     fontSize: 16,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#6B7280",
     marginTop: 4,
   },
@@ -570,12 +574,13 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: 24,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#1E1F35",
     marginTop: 8,
   },
   statLabel: {
     fontSize: 12,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#6B7280",
     marginTop: 4,
   },
@@ -607,6 +612,7 @@ const styles = StyleSheet.create({
   ruleItem: {
     flex: 1,
     fontSize: 14,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#374151",
     lineHeight: 20,
   },
@@ -629,7 +635,7 @@ const styles = StyleSheet.create({
   startButtonText: {
     color: "#fff",
     fontSize: 18,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
 
   playingHeader: {
@@ -647,7 +653,7 @@ const styles = StyleSheet.create({
   questionCounterText: {
     color: "#fff",
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   scoreDisplay: {
     flexDirection: "row",
@@ -660,7 +666,7 @@ const styles = StyleSheet.create({
   },
   currentScore: {
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#92400E",
   },
   progressBarBg: {
@@ -689,7 +695,7 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 13,
     color: "#6366F1",
-    fontWeight: "600",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
   questionCard: {
     backgroundColor: "#F8FAFC",
@@ -701,7 +707,7 @@ const styles = StyleSheet.create({
   },
   questionText: {
     fontSize: 17,
-    fontWeight: "600",
+    fontFamily: "PlusJakartaSans_600SemiBold",
     color: "#1E1F35",
     lineHeight: 26,
   },
@@ -728,7 +734,7 @@ const styles = StyleSheet.create({
   },
   answerLabelText: {
     fontSize: 16,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#6B7280",
   },
   correctLabel: {
@@ -746,6 +752,7 @@ const styles = StyleSheet.create({
   answerText: {
     flex: 1,
     fontSize: 15,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#374151",
     lineHeight: 22,
   },
@@ -793,10 +800,11 @@ const styles = StyleSheet.create({
   },
   explanationTitle: {
     fontSize: 18,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   explanationText: {
     fontSize: 14,
+    fontFamily: "PlusJakartaSans_400Regular",
     lineHeight: 22,
     color: "#374151",
   },
@@ -818,7 +826,7 @@ const styles = StyleSheet.create({
   nextButtonText: {
     color: "#fff",
     fontSize: 17,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
 
   resultHeader: {
@@ -827,7 +835,7 @@ const styles = StyleSheet.create({
   },
   resultTitle: {
     fontSize: 28,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#1E1F35",
   },
   scoreCircle: {
@@ -843,10 +851,11 @@ const styles = StyleSheet.create({
   },
   scorePercentage: {
     fontSize: 42,
-    fontWeight: "800",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   scoreSubtext: {
     fontSize: 14,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#6B7280",
     marginTop: 4,
   },
@@ -864,11 +873,12 @@ const styles = StyleSheet.create({
   },
   pointsValue: {
     fontSize: 24,
-    fontWeight: "800",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#92400E",
   },
   pointsLabel: {
     fontSize: 14,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#92400E",
   },
   highScoreBadge: {
@@ -885,7 +895,7 @@ const styles = StyleSheet.create({
   },
   highScoreText: {
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     color: "#92400E",
   },
   savingContainer: {
@@ -901,6 +911,7 @@ const styles = StyleSheet.create({
   },
   resultMessage: {
     fontSize: 15,
+    fontFamily: "PlusJakartaSans_400Regular",
     color: "#6B7280",
     textAlign: "center",
     lineHeight: 24,
@@ -929,7 +940,7 @@ const styles = StyleSheet.create({
   restartButtonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   homeButton: {
     flex: 1,
@@ -944,7 +955,7 @@ const styles = StyleSheet.create({
   homeButtonText: {
     color: "#6366F1",
     fontSize: 16,
-    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
 
   bottomNav: {
@@ -982,7 +993,7 @@ const styles = StyleSheet.create({
   },
   navLabel: {
     fontSize: 12,
-    fontWeight: "600",
+    fontFamily: "PlusJakartaSans_600SemiBold",
     color: "#9CA3AF",
     marginTop: 4,
   },

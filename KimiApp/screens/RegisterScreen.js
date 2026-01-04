@@ -38,7 +38,6 @@ export default function RegisterScreen({ navigation }) {
   }
 
   const handleRegister = async () => {
-    // Validation
     if (!email || !username || !password || !confirmPassword) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
@@ -54,7 +53,6 @@ export default function RegisterScreen({ navigation }) {
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       Alert.alert('Error', 'Please enter a valid email address');
@@ -63,16 +61,13 @@ export default function RegisterScreen({ navigation }) {
 
     setLoading(true);
     try {
-      // Create user with email and password
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Update profile with username
       await updateProfile(user, {
         displayName: username,
       });
 
-      // Save user data to Firestore
       await setDoc(doc(db, 'users', user.uid), {
         email: email,
         username: username,

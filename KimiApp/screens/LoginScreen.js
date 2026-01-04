@@ -42,7 +42,6 @@ export default function LoginScreen({ navigation }) {
 
     setLoading(true);
     try {
-      // Query Firestore to find user by username
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('username', '==', username));
       const querySnapshot = await getDocs(q);
@@ -53,14 +52,11 @@ export default function LoginScreen({ navigation }) {
         return;
       }
 
-      // Get the email from the first matching document
       const userDoc = querySnapshot.docs[0];
       const userEmail = userDoc.data().email;
 
-      // Sign in with email and password
       await signInWithEmailAndPassword(auth, userEmail, password);
       
-      // Navigate to home screen
       navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }],

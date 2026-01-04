@@ -29,7 +29,6 @@ export default function TeoriScreen({ navigation }) {
     PlusJakartaSans_700Bold,
   });
 
-  // Load progress setiap kali screen difokuskan
   useFocusEffect(
     useCallback(() => {
       loadProgress();
@@ -52,7 +51,6 @@ export default function TeoriScreen({ navigation }) {
           setTermokimiaProgress(data.termokimiaProgress || 0);
           setStoikiometriProgress(data.stoikiometriProgress || 0);
         } else {
-          // User baru - mulai dari 0 semua
           setAsamBasaProgress(0);
           setTitrasiProgress(0);
           setReaksiRedoksProgress(0);
@@ -63,7 +61,6 @@ export default function TeoriScreen({ navigation }) {
         return;
       }
       
-      // No user logged in - reset to 0
       setAsamBasaProgress(0);
       setTitrasiProgress(0);
       setReaksiRedoksProgress(0);
@@ -72,7 +69,6 @@ export default function TeoriScreen({ navigation }) {
       setStoikiometriProgress(0);
     } catch (error) {
       console.error('Error loading progress:', error);
-      // On error - reset to 0
       setAsamBasaProgress(0);
       setTitrasiProgress(0);
       setReaksiRedoksProgress(0);
@@ -145,12 +141,10 @@ export default function TeoriScreen({ navigation }) {
     },
   ];
 
-  // Calculate total progress
   const totalProgress = Math.round(
     modules.reduce((sum, m) => sum + m.progress, 0) / modules.length
   );
 
-  // Filter modules based on search
   const filteredModules = modules.filter(
     (m) =>
       m.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

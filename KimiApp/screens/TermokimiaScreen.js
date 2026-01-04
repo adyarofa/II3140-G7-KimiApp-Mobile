@@ -35,11 +35,9 @@ export default function TermokimiaScreen({ navigation }) {
           setScrollProgress(docSnap.data().termokimiaProgress);
           return;
         }
-        // User exists but no progress data yet - start from 0
         setScrollProgress(0);
         return;
       }
-      // No user logged in - fallback to AsyncStorage
       const saved = await AsyncStorage.getItem('termokimiaProgress');
       if (saved) setScrollProgress(parseInt(saved));
     } catch (error) {

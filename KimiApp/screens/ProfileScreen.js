@@ -60,13 +60,11 @@ export default function ProfileScreen({ navigation }) {
           );
           setTeoriProgress(totalProgress);
         } else {
-          // User baru - mulai dari 0
           setTeoriProgress(0);
         }
         return;
       }
       
-      // No user - set to 0
       setTeoriProgress(0);
     } catch (error) {
       console.error('Error loading progress:', error);
@@ -111,7 +109,6 @@ export default function ProfileScreen({ navigation }) {
 
   const handleLogout = async () => {
     try {
-      // Clear all progress from AsyncStorage saat logout
       await AsyncStorage.multiRemove([
         'asamBasaProgress',
         'titrasiProgress',

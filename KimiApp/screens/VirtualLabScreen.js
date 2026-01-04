@@ -236,13 +236,11 @@ export default function VirtualLabScreen({ navigation }) {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient colors={['#EEF2FF', '#E0E7FF', '#C7D2FE']} style={styles.gradient}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <MaterialIcons name="arrow-back" size={24} color="#4338CA" />
-          </TouchableOpacity>
+        <SafeAreaView style={styles.safeArea}>
+          {/* Header */}
+          <View style={styles.header}>
           <View style={styles.headerTitleContainer}>
             <MaterialIcons name="science" size={28} color="#4338CA" />
             <Text style={styles.headerTitle}>Lab Virtual</Text>
@@ -464,30 +462,30 @@ export default function VirtualLabScreen({ navigation }) {
         {/* Bottom Navigation */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-            <MaterialIcons name="home" size={24} color="#9CA3AF" />
-            <Text style={styles.navText}>Beranda</Text>
+            <MaterialIcons name="home" size={26} color="#9CA3AF" />
+            <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Teori')}>
-            <MaterialIcons name="menu-book" size={24} color="#9CA3AF" />
+            <MaterialIcons name="menu-book" size={26} color="#9CA3AF" />
             <Text style={styles.navText}>Modul</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.navItem, styles.navItemActive]}>
-            <View style={styles.navActiveIcon}>
-              <MaterialIcons name="science" size={24} color="#fff" />
-            </View>
-            <Text style={styles.navTextActive}>Lab</Text>
+          <TouchableOpacity style={styles.navItem}>
+            <View style={styles.activeIndicator} />
+            <MaterialIcons name="science" size={26} color="#6366F1" />
+            <Text style={styles.navTextActive}>Simulasi</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Quiz')}>
-            <MaterialIcons name="quiz" size={24} color="#9CA3AF" />
+            <MaterialIcons name="quiz" size={26} color="#9CA3AF" />
             <Text style={styles.navText}>Kuis</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
-            <MaterialIcons name="person" size={24} color="#9CA3AF" />
+            <MaterialIcons name="person" size={26} color="#9CA3AF" />
             <Text style={styles.navText}>Profil</Text>
           </TouchableOpacity>
         </View>
+        </SafeAreaView>
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -498,12 +496,15 @@ const styles = StyleSheet.create({
   gradient: {
     flex: 1,
   },
+  safeArea: {
+    flex: 1,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 15,
     paddingBottom: 15,
   },
   backButton: {
@@ -949,46 +950,41 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 8,
+    paddingTop: 12,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 10,
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 20,
   },
   navItem: {
     flex: 1,
     alignItems: 'center',
     paddingVertical: 8,
+    position: 'relative',
   },
-  navItemActive: {
-    marginTop: -20,
-  },
-  navActiveIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#4338CA',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#4338CA',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
+  activeIndicator: {
+    position: 'absolute',
+    top: -12,
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#6366F1',
   },
   navText: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'PlusJakartaSans_400Regular',
     color: '#9CA3AF',
     marginTop: 4,
   },
   navTextActive: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: 'PlusJakartaSans_600SemiBold',
-    color: '#4338CA',
-    marginTop: 6,
+    color: '#6366F1',
+    marginTop: 4,
   },
 });

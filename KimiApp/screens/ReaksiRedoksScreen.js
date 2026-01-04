@@ -41,13 +41,11 @@ export default function ReaksiRedoksScreen({ navigation }) {
             return;
           }
         }
-        // User exists but no progress data yet - start from 0
         setProgress(0);
         await AsyncStorage.setItem('reaksiRedoksProgress', '0');
         return;
       }
       
-      // No user logged in - fallback to AsyncStorage
       const savedProgress = await AsyncStorage.getItem('reaksiRedoksProgress');
       if (savedProgress !== null) {
         setProgress(parseInt(savedProgress));

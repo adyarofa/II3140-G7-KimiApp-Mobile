@@ -22,7 +22,6 @@ export default function TitrasiScreen({ navigation }) {
     PlusJakartaSans_700Bold,
   });
 
-  // Load saved progress on mount
   useEffect(() => {
     loadProgress();
   }, []);
@@ -42,13 +41,11 @@ export default function TitrasiScreen({ navigation }) {
             return;
           }
         }
-        // User exists but no progress data yet - start from 0
         setProgress(0);
         await AsyncStorage.setItem('titrasiProgress', '0');
         return;
       }
       
-      // No user logged in - fallback to AsyncStorage
       const savedProgress = await AsyncStorage.getItem('titrasiProgress');
       if (savedProgress !== null) {
         setProgress(parseInt(savedProgress));
@@ -512,7 +509,6 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
   },
-  // Header
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -558,7 +554,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_700Bold',
     color: '#6366F1',
   },
-  // Hero Card
   heroCard: {
     backgroundColor: '#6366F1',
     borderRadius: 24,
@@ -611,7 +606,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginHorizontal: 12,
   },
-  // Section Card
   sectionCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -638,7 +632,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1E1F35',
   },
-  // Step Items
   stepItem: {
     flexDirection: 'row',
     paddingBottom: 20,
@@ -677,7 +670,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     lineHeight: 22,
   },
-  // Two Column Container
   twoColumnContainer: {
     flexDirection: 'row',
     marginBottom: 16,
@@ -766,7 +758,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_400Regular',
     color: '#1E1F35',
   },
-  // Info Card
   infoCard: {
     flexDirection: 'row',
     backgroundColor: '#EEF2FF',
@@ -799,7 +790,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     lineHeight: 20,
   },
-  // Content Text
   contentText: {
     fontSize: 14,
     fontFamily: 'PlusJakartaSans_400Regular',
@@ -807,7 +797,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 16,
   },
-  // Concept Card
   conceptCard: {
     backgroundColor: '#F9FAFB',
     borderRadius: 12,
@@ -829,7 +818,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     lineHeight: 22,
   },
-  // Table
   tableContainer: {
     borderRadius: 12,
     overflow: 'hidden',
@@ -858,7 +846,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_400Regular',
     color: '#4B5563',
   },
-  // Tip Card
   tipCard: {
     flexDirection: 'row',
     backgroundColor: '#FFFBEB',
@@ -874,7 +861,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 10,
   },
-  // Formula Card Large
   formulaCardLarge: {
     backgroundColor: '#F3F4FF',
     borderRadius: 16,
@@ -908,7 +894,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     lineHeight: 20,
   },
-  // Example Card
   exampleCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
@@ -969,7 +954,6 @@ const styles = StyleSheet.create({
     color: '#065F46',
     lineHeight: 22,
   },
-  // Application Items
   applicationItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -1003,7 +987,6 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     lineHeight: 20,
   },
-  // Navigation Buttons
   navigationButtons: {
     flexDirection: 'row',
     gap: 12,
@@ -1044,7 +1027,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#FFFFFF',
   },
-  // Bottom Navigation
   bottomNav: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
