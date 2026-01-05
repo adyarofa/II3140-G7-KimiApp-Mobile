@@ -94,14 +94,12 @@ export default function SplashScreen({ onFinish }) {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      {/* Decorative bubbles */}
       <Animated.View style={[styles.bubble, styles.bubble1, { transform: [{ translateY: bubbleTranslate1 }] }]} />
       <Animated.View style={[styles.bubble, styles.bubble2, { transform: [{ translateY: bubbleTranslate2 }] }]} />
       <Animated.View style={[styles.bubble, styles.bubble3, { transform: [{ translateY: bubbleTranslate3 }] }]} />
       <Animated.View style={[styles.bubble, styles.bubble4, { transform: [{ translateY: bubbleTranslate1 }] }]} />
       <Animated.View style={[styles.bubble, styles.bubble5, { transform: [{ translateY: bubbleTranslate2 }] }]} />
 
-      {/* Logo */}
       <Animated.View style={[
         styles.logoContainer,
         {
@@ -116,7 +114,6 @@ export default function SplashScreen({ onFinish }) {
         />
       </Animated.View>
 
-      {/* App Name */}
       <Animated.View style={[styles.textContainer, { opacity: textFadeAnim }]}>
         <Text style={styles.tagline}>Belajar Kimia Jadi Menyenangkan</Text>
       </Animated.View>

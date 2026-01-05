@@ -101,7 +101,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
         scrollEventThrottle={16}
       >
         <View style={styles.scrollContent}>
-          {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity 
               style={styles.backButton} 
@@ -118,7 +117,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Hero Card */}
           <View style={styles.heroCard}>
             <View style={styles.heroBadge}>
               <Text style={styles.heroBadgeText}>Kimia Fisik</Text>
@@ -137,7 +135,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Konsep Utama */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={styles.sectionIconContainer}>
@@ -183,7 +180,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Penyetaraan dan Aplikasi */}
           <View style={styles.twoColumnContainer}>
             <View style={styles.formulaCard}>
               <View style={styles.formulaIconContainer}>
@@ -210,7 +206,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Tips Menghafal */}
           <View style={styles.infoCard}>
             <View style={styles.infoIconContainer}>
               <MaterialIcons name="tips-and-updates" size={20} color="#6366F1" />
@@ -223,7 +218,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Bilangan Oksidasi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#FEF3C7' }]}>
@@ -247,7 +241,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Sel Elektrokimia */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#DBEAFE' }]}>
@@ -277,7 +270,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Potensial Sel */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#D1FAE5' }]}>
@@ -306,7 +298,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Tabel Potensial Reduksi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#FCE7F3' }]}>
@@ -353,7 +344,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Contoh Soal */}
           <View style={styles.exampleCard}>
             <View style={styles.exampleHeader}>
               <View style={styles.exampleIconContainer}>
@@ -397,7 +387,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Korosi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#FEE2E2' }]}>
@@ -421,7 +410,6 @@ export default function ReaksiRedoksScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Navigation Buttons */}
           <View style={styles.navigationButtons}>
             <TouchableOpacity 
               style={styles.backModuleButton}

@@ -98,7 +98,6 @@ export default function RegisterScreen({ navigation }) {
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Logo */}
         <TouchableOpacity 
           style={styles.logoContainer}
           onPress={() => navigation.navigate('Landing')}
@@ -110,15 +109,12 @@ export default function RegisterScreen({ navigation }) {
           />
         </TouchableOpacity>
 
-        {/* Title */}
         <Text style={styles.title}>Sign Up</Text>
         <Text style={styles.subtitle}>
           Create an account to get started
         </Text>
 
-        {/* Form */}
         <View style={styles.form}>
-          {/* Email Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="email" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -132,7 +128,6 @@ export default function RegisterScreen({ navigation }) {
             />
           </View>
 
-          {/* Username Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="account-circle" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -145,7 +140,6 @@ export default function RegisterScreen({ navigation }) {
             />
           </View>
 
-          {/* Password Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="lock" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -169,7 +163,6 @@ export default function RegisterScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* Confirm Password Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="lock" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -193,7 +186,6 @@ export default function RegisterScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* Sign Up Button */}
           <TouchableOpacity
             style={[styles.signupButton, loading && styles.signupButtonDisabled]}
             onPress={handleRegister}
@@ -206,7 +198,6 @@ export default function RegisterScreen({ navigation }) {
             )}
           </TouchableOpacity>
 
-          {/* Login Link */}
           <View style={styles.loginContainer}>
             <Text style={styles.loginText}>Already have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>

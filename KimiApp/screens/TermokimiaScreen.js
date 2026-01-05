@@ -84,7 +84,6 @@ export default function TermokimiaScreen({ navigation }) {
         showsVerticalScrollIndicator={true}
       >
         <View style={styles.scrollContent}>
-          {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
               <MaterialIcons name="arrow-back" size={24} color="#1F2937" />
@@ -98,7 +97,6 @@ export default function TermokimiaScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Hero Card */}
           <View style={styles.heroCard}>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>Kimia Fisik</Text>
@@ -117,7 +115,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Konsep Utama */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#EEF2FF' }]}>
@@ -126,7 +123,6 @@ export default function TermokimiaScreen({ navigation }) {
             <Text style={styles.sectionTitle}>Konsep Utama</Text>
           </View>
 
-          {/* 1. Entalpi */}
           <View style={styles.conceptItem}>
             <View style={styles.conceptNumber}>
               <Text style={styles.conceptNumberText}>1</Text>
@@ -139,7 +135,6 @@ export default function TermokimiaScreen({ navigation }) {
             </View>
           </View>
 
-          {/* 2. Hukum Hess */}
           <View style={styles.conceptItem}>
             <View style={styles.conceptNumber}>
               <Text style={styles.conceptNumberText}>2</Text>
@@ -152,7 +147,6 @@ export default function TermokimiaScreen({ navigation }) {
             </View>
           </View>
 
-          {/* 3. Sistem & Lingkungan */}
           <View style={[styles.conceptItem, { borderBottomWidth: 0, paddingBottom: 0, marginBottom: 0 }]}>
             <View style={styles.conceptNumber}>
               <Text style={styles.conceptNumberText}>3</Text>
@@ -166,9 +160,7 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Info Cards Row */}
         <View style={styles.cardRow}>
-          {/* Energi Ikatan */}
           <View style={styles.infoCard}>
             <View style={[styles.infoIcon, { backgroundColor: '#EEF2FF' }]}>
               <MaterialIcons name="link" size={22} color="#6366F1" />
@@ -187,7 +179,6 @@ export default function TermokimiaScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Kalor Reaksi */}
           <View style={styles.infoCard}>
             <View style={[styles.infoIcon, { backgroundColor: '#EEF2FF' }]}>
               <MaterialIcons name="thermostat" size={22} color="#6366F1" />
@@ -207,7 +198,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Tips Card */}
         <View style={styles.tipsCard}>
           <View style={styles.tipsHeader}>
             <View style={[styles.tipsIcon, { backgroundColor: '#FEF3C7' }]}>
@@ -220,7 +210,6 @@ export default function TermokimiaScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* Jenis Entalpi */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#FEE2E2' }]}>
@@ -258,7 +247,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Diagram Entalpi */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#DCFCE7' }]}>
@@ -268,7 +256,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
 
           <View style={styles.diagramContainer}>
-            {/* Eksoterm */}
             <View style={styles.diagramBox}>
               <Text style={styles.diagramTitle}>Eksoterm (ΔH {'<'} 0)</Text>
               <View style={styles.diagramVisual}>
@@ -283,7 +270,6 @@ export default function TermokimiaScreen({ navigation }) {
               </View>
             </View>
 
-            {/* Endoterm */}
             <View style={styles.diagramBox}>
               <Text style={styles.diagramTitle}>Endoterm (ΔH {'>'} 0)</Text>
               <View style={styles.diagramVisual}>
@@ -300,7 +286,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Perhitungan Entalpi */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#E0E7FF' }]}>
@@ -331,7 +316,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Kalorimetri */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#FEF3C7' }]}>
@@ -364,7 +348,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Contoh Soal */}
         <View style={styles.sectionCard}>
           <View style={styles.sectionHeader}>
             <View style={[styles.sectionIcon, { backgroundColor: '#DCFCE7' }]}>
@@ -373,7 +356,6 @@ export default function TermokimiaScreen({ navigation }) {
             <Text style={styles.sectionTitle}>Contoh Soal</Text>
           </View>
 
-          {/* Soal 1 */}
           <View style={styles.exampleItem}>
             <View style={styles.exampleHeader}>
               <View style={styles.exampleBadge}>
@@ -399,7 +381,6 @@ export default function TermokimiaScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Soal 2 */}
           <View style={[styles.exampleItem, { borderBottomWidth: 0, paddingBottom: 0, marginBottom: 0 }]}>
             <View style={styles.exampleHeader}>
               <View style={styles.exampleBadge}>
@@ -421,7 +402,6 @@ export default function TermokimiaScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Navigation Buttons */}
         <View style={styles.navigationButtons}>
           <TouchableOpacity 
             style={styles.backModuleButton}

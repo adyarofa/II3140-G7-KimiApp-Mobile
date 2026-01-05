@@ -84,7 +84,6 @@ export default function StoikiometriScreen({ navigation }) {
         showsVerticalScrollIndicator={true}
       >
         <View style={styles.scrollContent}>
-          {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
               <MaterialIcons name="arrow-back" size={24} color="#1F2937" />
@@ -117,7 +116,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Konsep Utama */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#EEF2FF' }]}>
@@ -126,7 +124,6 @@ export default function StoikiometriScreen({ navigation }) {
               <Text style={styles.sectionTitle}>Konsep Utama</Text>
             </View>
 
-            {/* 1. Persamaan Reaksi */}
             <View style={styles.conceptItem}>
               <View style={styles.conceptNumber}>
                 <Text style={styles.conceptNumberText}>1</Text>
@@ -139,7 +136,6 @@ export default function StoikiometriScreen({ navigation }) {
               </View>
             </View>
 
-            {/* 2. Pereaksi Pembatas */}
             <View style={styles.conceptItem}>
               <View style={styles.conceptNumber}>
                 <Text style={styles.conceptNumberText}>2</Text>
@@ -152,7 +148,6 @@ export default function StoikiometriScreen({ navigation }) {
               </View>
             </View>
 
-            {/* 3. Massa Atom */}
             <View style={[styles.conceptItem, { borderBottomWidth: 0, paddingBottom: 0, marginBottom: 0 }]}>
               <View style={styles.conceptNumber}>
                 <Text style={styles.conceptNumberText}>3</Text>
@@ -187,7 +182,6 @@ export default function StoikiometriScreen({ navigation }) {
               </View>
             </View>
 
-            {/* Rumus Kimia */}
             <View style={styles.infoCard}>
               <View style={[styles.infoIcon, { backgroundColor: '#F3E8FF' }]}>
                 <MaterialIcons name="science" size={22} color="#8B5CF6" />
@@ -207,7 +201,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Tips Card */}
           <View style={styles.tipsCard}>
             <View style={styles.tipsHeader}>
               <View style={[styles.tipsIcon, { backgroundColor: '#DCFCE7' }]}>
@@ -220,7 +213,6 @@ export default function StoikiometriScreen({ navigation }) {
             </Text>
           </View>
 
-          {/* Konsep Mol */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#DCFCE7' }]}>
@@ -255,7 +247,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Persamaan Reaksi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#FEE2E2' }]}>
@@ -282,7 +273,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Pereaksi Pembatas */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#FEF3C7' }]}>
@@ -310,7 +300,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Rumus Empiris & Molekul */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#F3E8FF' }]}>
@@ -346,7 +335,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Contoh Soal */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIcon, { backgroundColor: '#EEF2FF' }]}>
@@ -355,7 +343,6 @@ export default function StoikiometriScreen({ navigation }) {
               <Text style={styles.sectionTitle}>Contoh Soal</Text>
             </View>
 
-            {/* Soal 1 */}
             <View style={styles.exampleItem}>
               <View style={styles.exampleHeader}>
                 <View style={styles.exampleBadge}>
@@ -376,7 +363,6 @@ export default function StoikiometriScreen({ navigation }) {
               </View>
             </View>
 
-            {/* Soal 2 */}
             <View style={[styles.exampleItem, { borderBottomWidth: 0, paddingBottom: 0, marginBottom: 0 }]}>
               <View style={styles.exampleHeader}>
                 <View style={styles.exampleBadge}>
@@ -401,7 +387,6 @@ export default function StoikiometriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Navigation Buttons */}
           <View style={styles.navigationButtons}>
             <TouchableOpacity 
               style={styles.backModuleButton}
@@ -420,7 +405,6 @@ export default function StoikiometriScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* Selesai Card */}
           <View style={styles.completeCard}>
             <MaterialIcons name="celebration" size={40} color="#6366F1" />
             <Text style={styles.completeTitle}>Selamat!</Text>

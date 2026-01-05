@@ -163,7 +163,6 @@ export default function TeoriScreen({ navigation }) {
         showsVerticalScrollIndicator={true}
       >
         <View style={styles.scrollContent}>
-          {/* Header */}
           <View style={styles.header}>
             <View>
               <Text style={styles.headerTitle}>Modul Teori</Text>
@@ -175,7 +174,6 @@ export default function TeoriScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Search Bar */}
           <View style={styles.searchContainer}>
             <MaterialIcons name="search" size={22} color="#9CA3AF" />
             <TextInput
@@ -187,7 +185,6 @@ export default function TeoriScreen({ navigation }) {
             />
           </View>
 
-          {/* Module Cards */}
           <View style={styles.modulesContainer}>
             {filteredModules.map((module) => (
               <TouchableOpacity 
@@ -245,7 +242,6 @@ export default function TeoriScreen({ navigation }) {
         </View>
       </ScrollView>
 
-      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
           <MaterialIcons name="home" size={26} color="#9CA3AF" />

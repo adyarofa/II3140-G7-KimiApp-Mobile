@@ -144,19 +144,15 @@ const TestTube = ({ color, hasBorder, colorName }) => {
   return (
     <View style={styles.testTubeContainer}>
       <View style={styles.testTubeWrapper}>
-        {/* Bagian atas tabung */}
         <View style={styles.tubeTop}>
           <View style={styles.tubeRim} />
         </View>
         
-        {/* Badan tabung */}
         <View style={[
           styles.tubeBody,
           hasBorder && { borderColor: '#ccc', borderWidth: 2 }
         ]}>
-          {/* Cairan */}
           <View style={[styles.liquid, { backgroundColor: color }]}>
-            {/* Gelembung animasi */}
             <Animated.View 
               style={[
                 styles.bubble, 
@@ -179,11 +175,9 @@ const TestTube = ({ color, hasBorder, colorName }) => {
             />
           </View>
           
-          {/* Refleksi cahaya */}
           <View style={styles.reflection} />
         </View>
         
-        {/* Bagian bawah tabung (melengkung) */}
         <View style={[styles.tubeBottom, { backgroundColor: color }]}>
           {hasBorder && <View style={styles.tubeBottomBorder} />}
         </View>
@@ -255,7 +249,6 @@ export default function VirtualLabScreen({ navigation }) {
           showsVerticalScrollIndicator={false} 
           contentContainerStyle={styles.scrollContent}
         >
-          {/* Title Card */}
           <View style={styles.titleCard}>
             <LinearGradient 
               colors={['#4338CA', '#6366F1']} 
@@ -270,7 +263,6 @@ export default function VirtualLabScreen({ navigation }) {
             </LinearGradient>
           </View>
 
-          {/* Pilih Larutan */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <MaterialIcons name="local-drink" size={24} color="#4338CA" />
@@ -310,7 +302,6 @@ export default function VirtualLabScreen({ navigation }) {
             </ScrollView>
           </View>
 
-          {/* Pilih Indikator */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <MaterialIcons name="colorize" size={24} color="#4338CA" />
@@ -392,7 +383,6 @@ export default function VirtualLabScreen({ navigation }) {
                   </View>
                 </View>
 
-                {/* Penjelasan */}
                 <View style={styles.explanationBox}>
                   <View style={styles.explanationHeader}>
                     <MaterialIcons name="lightbulb" size={20} color="#F59E0B" />
@@ -406,7 +396,6 @@ export default function VirtualLabScreen({ navigation }) {
             </Animated.View>
           )}
 
-          {/* Tabel Referensi */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <MaterialIcons name="table-chart" size={24} color="#4338CA" />
@@ -415,7 +404,6 @@ export default function VirtualLabScreen({ navigation }) {
             
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={styles.tableCard}>
-                {/* Header Tabel */}
                 <View style={styles.tableHeader}>
                   <Text style={[styles.tableHeaderText, { width: 90 }]}>Indikator</Text>
                   <Text style={[styles.tableHeaderText, { width: 65 }]}>HCl</Text>
@@ -425,7 +413,6 @@ export default function VirtualLabScreen({ navigation }) {
                   <Text style={[styles.tableHeaderText, { width: 65 }]}>NaOH</Text>
                 </View>
                 
-                {/* Baris Tabel */}
                 {Object.entries(indicatorData).map(([key, indicator], index) => (
                   <View 
                     key={key} 
@@ -460,7 +447,6 @@ export default function VirtualLabScreen({ navigation }) {
           <View style={{ height: 100 }} />
         </ScrollView>
 
-        {/* Bottom Navigation */}
         <View style={styles.bottomNav}>
           <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
             <MaterialIcons name="home" size={26} color="#9CA3AF" />

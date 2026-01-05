@@ -101,7 +101,6 @@ export default function TitrasiScreen({ navigation }) {
         scrollEventThrottle={16}
       >
         <View style={styles.scrollContent}>
-          {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity 
               style={styles.backButton} 
@@ -113,13 +112,11 @@ export default function TitrasiScreen({ navigation }) {
               <Text style={styles.headerTitle}>Modul Titrasi</Text>
               <Text style={styles.headerSubtitle}>Lanjutkan pembelajaranmu</Text>
             </View>
-            {/* Progress Circle */}
             <View style={styles.progressCircle}>
               <Text style={styles.progressCircleText}>{progress}%</Text>
             </View>
           </View>
 
-          {/* Hero Card */}
           <View style={styles.heroCard}>
             <View style={styles.heroBadge}>
               <Text style={styles.heroBadgeText}>Kimia Analisis</Text>
@@ -138,7 +135,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Prosedur Titrasi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={styles.sectionIconContainer}>
@@ -184,9 +180,7 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Rumus dan Jenis Titrasi */}
           <View style={styles.twoColumnContainer}>
-            {/* Rumus */}
             <View style={styles.formulaCard}>
               <View style={styles.formulaIconContainer}>
                 <MaterialIcons name="calculate" size={24} color="#6366F1" />
@@ -201,7 +195,6 @@ export default function TitrasiScreen({ navigation }) {
               </Text>
             </View>
 
-            {/* Jenis Titrasi */}
             <View style={styles.jenisCard}>
               <View style={styles.jenisIconContainer}>
                 <MaterialIcons name="category" size={24} color="#10B981" />
@@ -217,7 +210,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Titik Ekuivalen vs Akhir */}
           <View style={styles.infoCard}>
             <View style={styles.infoIconContainer}>
               <MaterialIcons name="info" size={20} color="#6366F1" />
@@ -230,7 +222,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Kurva Titrasi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#FEF3C7' }]}>
@@ -267,7 +258,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Indikator Titrasi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#FCE7F3' }]}>
@@ -320,7 +310,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Perhitungan Titrasi */}
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <View style={[styles.sectionIconContainer, { backgroundColor: '#DBEAFE' }]}>
@@ -358,7 +347,6 @@ export default function TitrasiScreen({ navigation }) {
             </View>
           </View>
 
-          {/* Contoh Soal */}
           <View style={styles.exampleCard}>
             <View style={styles.exampleHeader}>
               <View style={styles.exampleIconContainer}>

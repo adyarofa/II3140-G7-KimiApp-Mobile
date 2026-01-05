@@ -92,14 +92,12 @@ export default function LandingScreen({ navigation }) {
 
   const renderSlide = ({ item }) => (
     <View style={styles.slide}>
-      {/* Outer gradient for glass effect */}
       <View style={styles.cardOuter}>
         <LinearGradient
           colors={['rgba(255,255,255,0.95)', 'rgba(243,240,255,0.85)', 'rgba(230,225,250,0.8)']}
           locations={[0, 0.5, 1]}
           style={styles.card}
         >
-          {/* Glass overlay */}
           <View style={styles.glassOverlay} />
           
           <View style={styles.cardContent}>
@@ -109,7 +107,6 @@ export default function LandingScreen({ navigation }) {
             </View>
             <Text style={styles.subtitle}>{item.subtitle}</Text>
             
-            {/* Dots inside card */}
             <View style={styles.dotsContainer}>
               {slides.map((_, index) => (
                 <TouchableOpacity
@@ -124,12 +121,9 @@ export default function LandingScreen({ navigation }) {
             </View>
           </View>
           
-          {/* Mascot Image */}
           <View style={styles.mascotContainer}>
-            {/* Sparkle large - top right of mascot */}
             <View style={[styles.sparkleLarge, { position: 'absolute', top: 20, right: 40 }]} />
             
-            {/* Sparkle small - bottom left of mascot */}
             <View style={[styles.sparkleSmall, { position: 'absolute', bottom: 60, left: 50 }]} />
             <View style={[styles.sparkleSmall, { position: 'absolute', bottom: 80, left: 35 }]} />
             
@@ -166,7 +160,6 @@ export default function LandingScreen({ navigation }) {
         )}
       />
 
-      {/* Bottom Buttons */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity 
           style={styles.skipButton}

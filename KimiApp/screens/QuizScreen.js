@@ -33,7 +33,7 @@ const getRandomQuestions = async (count = 8) => {
       return [];
     }
   } catch (error) {
-    console.error("❌ Error fetching questions:", error.message);
+    console.error("Error fetching questions:", error.message);
     return [];
   }
 };
@@ -226,7 +226,6 @@ const QuizScreen = ({ navigation }) => {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.card}>
-            {/* Header with Icon */}
             <View style={styles.headerSection}>
               <View style={styles.iconCircle}>
                 <MaterialIcons name="psychology" size={50} color="#6366F1" />
@@ -235,7 +234,6 @@ const QuizScreen = ({ navigation }) => {
               <Text style={styles.subtitle}>Uji pemahamanmu!</Text>
             </View>
 
-            {/* Stats Card */}
             <View style={styles.statsCard}>
               {loading ? (
                 <ActivityIndicator size="small" color="#6470ea" />
@@ -262,7 +260,6 @@ const QuizScreen = ({ navigation }) => {
               )}
             </View>
 
-            {/* Rules Section */}
             <View style={styles.rulesBox}>
               <View style={styles.ruleRow}>
                 <View style={styles.ruleIcon}>
@@ -291,7 +288,6 @@ const QuizScreen = ({ navigation }) => {
           </View>
         </ScrollView>
 
-        {/* Bottom Navigation */}
         <BottomNavBar navigation={navigation} />
       </View>
     );
@@ -306,7 +302,6 @@ const QuizScreen = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.card}>
-            {/* Header */}
             <View style={styles.playingHeader}>
               <View style={styles.questionCounter}>
                 <Text style={styles.questionCounterText}>
@@ -319,25 +314,21 @@ const QuizScreen = ({ navigation }) => {
               </View>
             </View>
 
-            {/* Progress Bar */}
             <View style={styles.progressBarBg}>
               <View style={[styles.progressBar, { width: `${progress}%` }]} />
             </View>
 
-            {/* Category Badge */}
             <View style={styles.categoryBadge}>
               <MaterialIcons name="category" size={14} color="#6366F1" />
               <Text style={styles.categoryText}>{currentQuestion.category}</Text>
             </View>
 
-            {/* Question Card */}
             <View style={styles.questionCard}>
               <Text style={styles.questionText}>
                 {currentQuestion.question}
               </Text>
             </View>
 
-            {/* Answer Choices */}
             <View style={styles.answersContainer}>
               {currentQuestion.answers.map((answer, index) => (
                 <TouchableOpacity
@@ -380,7 +371,6 @@ const QuizScreen = ({ navigation }) => {
               ))}
             </View>
 
-            {/* Explanation */}
             {showExplanation && (
               <View
                 style={[
@@ -411,7 +401,6 @@ const QuizScreen = ({ navigation }) => {
               </View>
             )}
 
-            {/* Next Button */}
             {showExplanation && (
               <TouchableOpacity
                 style={styles.nextButton}
@@ -445,27 +434,23 @@ const QuizScreen = ({ navigation }) => {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.card}>
-            {/* Result Header */}
             <View style={styles.resultHeader}>
               <Text style={styles.resultTitle}>
                 {percentage >= 80 ? "Luar Biasa!" : percentage >= 60 ? "Bagus!" : "Tetap Semangat!"}
               </Text>
             </View>
 
-            {/* Score Circle */}
             <View style={[styles.scoreCircle, { borderColor: getResultColor() }]}>
               <Text style={[styles.scorePercentage, { color: getResultColor() }]}>{Math.round(percentage)}%</Text>
               <Text style={styles.scoreSubtext}>{score}/{TOTAL_QUESTIONS} Benar</Text>
             </View>
 
-            {/* Points Earned */}
             <View style={styles.pointsEarned}>
               <MaterialIcons name="stars" size={28} color="#F59E0B" />
               <Text style={styles.pointsValue}>{finalPoints}</Text>
               <Text style={styles.pointsLabel}>poin diperoleh</Text>
             </View>
 
-            {/* High Score Badge */}
             {saving ? (
               <View style={styles.savingContainer}>
                 <ActivityIndicator size="small" color="#6470ea" />
@@ -478,10 +463,8 @@ const QuizScreen = ({ navigation }) => {
               </View>
             ) : null}
 
-            {/* Message */}
             <Text style={styles.resultMessage}>{getScoreMessage()}</Text>
 
-            {/* Action Buttons */}
             <View style={styles.actionButtons}>
               <TouchableOpacity
                 style={styles.restartButton}

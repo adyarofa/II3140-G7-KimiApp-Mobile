@@ -101,9 +101,7 @@ export default function LoginScreen({ navigation }) {
           Welcome back! Please login to continue
         </Text>
 
-        {/* Form */}
         <View style={styles.form}>
-          {/* Username Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="account-circle" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -116,7 +114,6 @@ export default function LoginScreen({ navigation }) {
             />
           </View>
 
-          {/* Password Input */}
           <View style={styles.inputContainer}>
             <MaterialIcons name="lock" size={24} color="#9CA3AF" style={styles.inputIcon} />
             <TextInput
@@ -140,7 +137,6 @@ export default function LoginScreen({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          {/* Login Button */}
           <TouchableOpacity
             style={[styles.loginButton, loading && styles.loginButtonDisabled]}
             onPress={handleLogin}
@@ -153,7 +149,6 @@ export default function LoginScreen({ navigation }) {
             )}
           </TouchableOpacity>
 
-          {/* Sign Up Link */}
           <View style={styles.signupContainer}>
             <Text style={styles.signupText}>Don't have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Register')}>

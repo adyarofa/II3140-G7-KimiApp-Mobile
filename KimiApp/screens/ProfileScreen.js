@@ -136,7 +136,6 @@ export default function ProfileScreen({ navigation }) {
         showsVerticalScrollIndicator={true}
       >
         <View style={styles.scrollContent}>
-          {/* Profile Card */}
           <View style={styles.profileCard}>
             <View style={styles.avatarContainer}>
               <Image
@@ -150,7 +149,6 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={styles.divider} />
 
-            {/* Progress Teori Section */}
             <View style={styles.statsSection}>
               <Text style={styles.statsTitle}>Progress Teori</Text>
               <View style={styles.progressContainer}>
@@ -167,7 +165,6 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={styles.divider} />
 
-            {/* Skor Kuis Section */}
             <View style={styles.statsSection}>
               <Text style={styles.statsTitle}>Skor Kuis Tertinggi</Text>
               <View style={styles.scoreContainer}>
